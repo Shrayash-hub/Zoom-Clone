@@ -1,0 +1,109 @@
+/* app/page.module.css */
+
+.page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--space-7) var(--space-5);
+  margin: var(--space-4);
+  background: var(--color-surface);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-card);
+  min-height: calc(100vh - var(--topbar-height) - calc(var(--space-4) * 2));
+  gap: var(--space-6);
+}
+
+/* ── Section 1: Clock ─────────────────────────────────────────── */
+
+.clockSection {
+  text-align: center;
+  margin-bottom: var(--space-2);
+}
+
+.clock {
+  display: block;
+  font-size: var(--font-size-clock);
+  font-weight: 300;
+  color: var(--color-text-primary);
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.date {
+  font-size: var(--font-size-lg);
+  color: var(--color-text-secondary);
+  margin-top: var(--space-2);
+}
+
+/* ── Error banner ─────────────────────────────────────────────── */
+
+.error {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  text-align: center;
+}
+
+/* ── Agenda Card (replaces cardsColumn) ─────────────────────── */
+
+.agendaCard {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-card);
+  width: 100%;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+@media (max-width: 767px) {
+  .page {
+    margin: var(--space-3);
+    min-height: calc(100vh - var(--topbar-height) - 56px - calc(var(--space-3) * 2));
+    padding: var(--space-5) var(--space-3);
+  }
+  .clock {
+    font-size: 36px;
+  }
+  .date {
+    font-size: var(--font-size-md);
+  }
+}
+
+/* ── Info banner ──────────────────────────────────────────────── */
+
+.infoBanner {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  width: 100%;
+  max-width: 600px;
+  background-color: var(--color-primary-soft);
+  border: 1px solid rgba(14, 113, 235, 0.2);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+  /* Placed after cardsColumn, which has gap, so no extra top margin needed */
+}
+
+.infoIcon {
+  color: var(--color-primary);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.infoText {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-primary);
+  line-height: 1.5;
+}
+
+.infoLink {
+  color: var(--color-primary);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.infoLink:hover {
+  text-decoration: underline;
+}

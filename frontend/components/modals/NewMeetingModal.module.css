@@ -1,0 +1,180 @@
+/* NewMeetingModal.module.css */
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: transparent;
+  z-index: 300;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.modal {
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-modal);
+  padding: var(--space-4) var(--space-4) var(--space-4);
+  border: 1px solid var(--color-border);
+  position: fixed;
+  width: 300px;
+  overflow-y: auto;
+  animation: slideUp var(--duration-fast) var(--easing);
+}
+
+@keyframes slideUp {
+  from { transform: translateY(12px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+/* Removed header styles as dropdown has no header */
+
+.toggleRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-3) 0;
+}
+
+.toggleLabel {
+  font-size: var(--font-size-md);
+  color: var(--color-text-primary);
+}
+
+/* Custom Toggle Switch */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 44px;
+  height: 24px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--color-text-secondary);
+  transition: .4s;
+  border-radius: 24px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 20px;
+  width: 20px;
+  left: 2px;
+  bottom: 2px;
+  background-color: white;
+  transition: .4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: var(--color-primary);
+}
+
+input:checked + .slider:before {
+  transform: translateX(20px);
+}
+
+.divider {
+  height: 1px;
+  background-color: var(--color-border);
+  margin: var(--space-4) 0;
+}
+
+.startBtn {
+  width: 100%;
+  height: 44px;
+  background: var(--color-primary);
+  color: var(--color-text-on-primary);
+  border: none;
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-md);
+  font-weight: 600;
+  cursor: pointer;
+  transition: background var(--duration-fast) var(--easing);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.startBtn:hover:not(:disabled) {
+  background: var(--color-primary-hover);
+}
+
+.startBtn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.error {
+  color: #de2828;
+  font-size: var(--font-size-sm);
+  text-align: center;
+  margin-top: var(--space-3);
+}
+
+/* ── Passcode field ─────────────────────────────────────────────── */
+
+.passcodeRow {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: var(--space-3) 0;
+  border-top: 1px solid var(--color-border);
+  margin-top: var(--space-2);
+}
+
+.passcodeLabel {
+  font-size: var(--font-size-md);
+  color: var(--color-text-primary);
+  font-weight: 500;
+}
+
+.passcodeOptional {
+  font-weight: 400;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+}
+
+.passcodeInput {
+  width: 100%;
+  box-sizing: border-box;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  min-height: 40px;
+  padding: 8px 12px;
+  font-size: var(--font-size-md);
+  color: var(--color-text-primary);
+  font-family: var(--font-primary);
+  transition: border-color var(--duration-fast) var(--easing),
+              box-shadow var(--duration-fast) var(--easing);
+}
+
+.passcodeInput:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(14, 113, 235, 0.15);
+  outline: none;
+}
+
+.passcodeInput::placeholder {
+  color: var(--color-text-secondary);
+}
+
+.passcodeInput:disabled {
+  opacity: 0.6;
+}

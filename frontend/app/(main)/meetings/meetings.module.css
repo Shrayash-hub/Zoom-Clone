@@ -1,0 +1,300 @@
+.page {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  background: var(--color-surface);
+}
+
+.leftPanel {
+  width: 280px;
+  flex-shrink: 0;
+  border-right: 1px solid var(--color-border);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.rightPanel {
+  flex: 1;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  height: 100%;
+  padding: 48px;
+  background: var(--color-surface);
+}
+
+.leftHeader {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-4) var(--space-4) var(--space-2) var(--space-4);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.refreshBtn {
+  background: none;
+  border: none;
+  padding: 4px;
+  border-radius: var(--radius-sm);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.refreshBtn:hover {
+  background: var(--color-surface-hover);
+}
+
+.refreshing {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  100% { transform: rotate(360deg); }
+}
+
+.list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0 var(--space-3) var(--space-4) var(--space-3);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.pmiCard {
+  background: var(--color-primary);
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-4);
+  cursor: pointer;
+  margin-bottom: var(--space-2);
+  border: 1px solid transparent;
+}
+
+.pmiCard.unselected {
+  background: transparent;
+  border-color: var(--color-border);
+}
+
+.pmiCard.unselected:hover {
+  background: var(--color-surface-hover);
+}
+
+.pmiTitle {
+  font-size: 16px;
+  font-weight: 700;
+  color: white;
+}
+
+.pmiCard.unselected .pmiTitle {
+  color: var(--color-text-primary);
+}
+
+.pmiSubtitle {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.8);
+  margin-top: 2px;
+}
+
+.pmiCard.unselected .pmiSubtitle {
+  color: var(--color-text-secondary);
+}
+
+.meetingRow {
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  background: transparent;
+}
+
+.meetingRow:hover {
+  background: var(--color-surface-hover);
+}
+
+.meetingRow.selected {
+  background: var(--color-primary);
+}
+
+.rowTitle {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.rowTime {
+  font-size: 12px;
+  color: var(--color-text-secondary);
+}
+
+.meetingRow.selected .rowTitle,
+.meetingRow.selected .rowTime {
+  color: white;
+}
+
+.emptyState {
+  text-align: center;
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  padding: var(--space-4) 0;
+}
+
+.addCalendar {
+  padding: var(--space-4);
+  text-align: center;
+}
+
+.addCalendarLink {
+  color: var(--color-primary);
+  font-size: 13px;
+  text-decoration: none;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.addCalendarLink:hover {
+  text-decoration: underline;
+}
+
+/* Right Panel Detail */
+.detailContainer {
+  width: 100%;
+  max-width: 800px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.detailTitle {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin-bottom: var(--space-1);
+}
+
+.detailId {
+  font-size: 16px;
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-6);
+}
+
+.detailMeta {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  margin-bottom: var(--space-6);
+}
+
+.metaText {
+  font-size: 14px;
+  color: var(--color-text-secondary);
+}
+
+.actions {
+  display: flex;
+  gap: var(--space-3);
+  margin-bottom: var(--space-5);
+}
+
+.btnPrimary, .btnSecondary {
+  padding: 10px 20px;
+  border-radius: var(--radius-full);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.btnPrimary {
+  background: var(--color-primary);
+  color: white;
+  border: none;
+}
+
+.btnPrimary:hover {
+  background: var(--color-primary-hover);
+}
+
+.btnSecondary {
+  background: var(--color-surface);
+  color: var(--color-text-primary);
+  border: 1px solid var(--color-border);
+}
+
+.btnSecondary:hover {
+  background: var(--color-surface-hover);
+}
+
+.showInviteLink {
+  color: var(--color-primary);
+  font-size: 14px;
+  font-weight: 500;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.showInviteLink:hover {
+  text-decoration: underline;
+}
+
+.backBtn {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--color-primary);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  margin-bottom: var(--space-4);
+  padding: 0;
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .leftPanel {
+    width: 220px;
+  }
+}
+
+@media (max-width: 767px) {
+  .page {
+    flex-direction: column;
+  }
+
+  .leftPanel {
+    width: 100%;
+    border-right: none;
+  }
+
+  .rightPanel {
+    padding: var(--space-4);
+    width: 100%;
+  }
+
+  .backBtn {
+    display: block;
+  }
+
+  .panelHidden {
+    display: none !important;
+  }
+
+  .panelVisible {
+    display: flex !important;
+    width: 100% !important;
+  }
+}

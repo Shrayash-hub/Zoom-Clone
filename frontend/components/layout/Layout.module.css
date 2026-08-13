@@ -1,0 +1,16 @@
+/* Layout.module.css — shell layout structure */
+
+.main {
+  padding-left: var(--sidebar-width);
+  padding-top: var(--topbar-height);
+  min-height: 100vh;
+  background: var(--color-bg);
+}
+
+@media (max-width: 767px) {
+  .main {
+    padding-left: 0;
+    padding-bottom: 56px;
+  }
+}
+

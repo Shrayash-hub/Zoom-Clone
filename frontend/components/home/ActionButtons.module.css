@@ -1,0 +1,87 @@
+/* ActionButtons.module.css */
+
+.row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: var(--space-7);
+}
+
+.item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  font-family: var(--font-primary);
+}
+
+.iconBox {
+  width: 52px;
+  height: 52px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transition: filter var(--duration-fast) var(--easing),
+              transform var(--duration-fast) var(--easing);
+}
+
+.item:hover .iconBox {
+  filter: brightness(0.9);
+  transform: translateY(-1px);
+}
+
+.item:active .iconBox {
+  transform: translateY(0);
+}
+
+.iconBoxNew {
+  background: var(--color-action-new);
+}
+
+.iconBoxJoin {
+  background: var(--color-action-join);
+}
+
+.iconBoxSchedule {
+  background: var(--color-action-schedule);
+}
+
+.calendarDateOverlay {
+  position: absolute;
+  top: 55%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  line-height: 1;
+  pointer-events: none;
+}
+
+.label {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-primary);
+  font-weight: 400;
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  white-space: nowrap;
+}
+
+.chevron {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-xs);
+  line-height: 1;
+}
+
+@media (max-width: 767px) {
+  .row {
+    gap: var(--space-5);
+  }
+}

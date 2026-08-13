@@ -1,0 +1,438 @@
+/* room.module.css */
+
+.roomLayout {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  margin: var(--space-4);
+  background-color: #1a1a1a;
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-card);
+  height: calc(100vh - var(--topbar-height) - calc(var(--space-4) * 2));
+  color: white;
+  overflow: hidden;
+}
+
+/* ── Top bar ────────────────────────────────────────────────────────── */
+.topBar {
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--space-4);
+  background-color: transparent;
+  flex-shrink: 0;
+}
+
+.title {
+  font-size: 14px;
+  font-weight: 500;
+  color: white;
+}
+
+.inviteBtn {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  padding: 4px 12px;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.inviteBtn:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.zoomBadge {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: var(--color-white);
+  color: var(--color-black);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+/* ── Main area ──────────────────────────────────────────────────────── */
+.mainArea {
+  flex: 1;
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  padding: var(--space-4);
+  gap: var(--space-4);
+  min-height: 0; /* Important for flex child scrolling/sizing */
+}
+
+.videoCard {
+  flex: 1;
+  height: 100%;
+  max-width: 1200px;
+  background-color: #2d2d2d;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  position: relative;
+  overflow: hidden;
+}
+
+.avatar {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background-color: var(--color-primary);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  font-weight: 600;
+  user-select: none;
+}
+
+.userName {
+  font-size: 16px;
+  font-weight: 500;
+  color: white;
+}
+
+.waitingText {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+}
+
+/* ── Participants Panel ──────────────────────────────────────────────── */
+.participantsPanel {
+  width: 280px;
+  background-color: #1f1f1f;
+  border-left: 1px solid #333;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.panelHeader {
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--space-3);
+  border-bottom: 1px solid #333;
+}
+
+.panelTitle {
+  font-size: 16px;
+  font-weight: 600;
+  color: white;
+}
+
+.closeBtn {
+  background: transparent;
+  border: none;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  border-radius: var(--radius-sm);
+}
+
+.closeBtn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
+.panelContent {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--space-2) 0;
+}
+
+.emptyPanelText {
+  color: var(--color-text-secondary);
+  font-size: 13px;
+  text-align: center;
+  margin-top: var(--space-6);
+}
+
+.participantRow {
+  display: flex;
+  align-items: center;
+  padding: var(--space-2) var(--space-3);
+  gap: var(--space-2);
+  position: relative;
+}
+
+.participantRow:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.pAvatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: var(--color-primary);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.pName {
+  font-size: 14px;
+  color: white;
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.hostBadge {
+  background: #333;
+  color: white;
+  font-size: 11px;
+  padding: 2px 6px;
+  border-radius: 12px;
+  flex-shrink: 0;
+}
+
+.removeBtn {
+  background: transparent;
+  border: none;
+  color: #ff4d4f;
+  font-size: 12px;
+  cursor: pointer;
+  display: none;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.removeBtn:hover {
+  background: rgba(255, 77, 79, 0.1);
+}
+
+.participantRow:hover .removeBtn {
+  display: block;
+}
+
+/* ── Controls bar ────────────────────────────────────────────────────── */
+.controlsBar {
+  height: 72px;
+  background-color: #111111;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--space-4);
+  flex-shrink: 0;
+  position: relative;
+}
+
+.controlsGroup {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+/* Center group specifically */
+.centerGroup {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  z-index: 1;
+}
+
+.controlBtn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  color: white;
+  width: 64px;
+  height: 56px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background 0.2s ease;
+  gap: 4px;
+}
+
+.controlBtn:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.controlBtn.active {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.controlLabel {
+  font-size: 11px;
+  font-weight: 400;
+}
+
+.controlIconWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.caretBadge {
+  position: absolute;
+  top: -2px;
+  right: -12px;
+  color: var(--color-text-secondary);
+}
+
+.caretBadgeShare {
+  position: absolute;
+  top: 0px;
+  right: -14px;
+  color: var(--color-text-secondary);
+}
+
+.alertBadge {
+  position: absolute;
+  bottom: -2px;
+  right: -4px;
+  background-color: #111111;
+  border-radius: 50%;
+}
+
+.numericBadge {
+  position: absolute;
+  top: -6px;
+  right: -12px;
+  background-color: #333;
+  color: white;
+  font-size: 9px;
+  font-weight: 700;
+  padding: 1px 4px;
+  border-radius: 10px;
+  line-height: 1;
+}
+
+.endBtn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  color: white;
+  width: 64px;
+  height: 56px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background 0.2s ease;
+  gap: 4px;
+}
+
+.endBtn:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.endIconCircle {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: var(--color-danger);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.muteAllBtn {
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  border: 1px solid rgba(255,255,255,0.3);
+  background: transparent;
+  color: #ffffff;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  flex-shrink: 0;
+}
+
+.muteAllBtn:hover {
+  background: rgba(255,255,255,0.1);
+}
+
+.muteAllBtn.muted {
+  color: #ff4d4f;
+  border-color: #ff4d4f;
+}
+
+@media (max-width: 767px) {
+  .participantsPanel {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 280px;
+    z-index: 10;
+  }
+
+  .controlLabel {
+    font-size: 10px;
+  }
+
+  .controlBtn {
+    padding: var(--space-1) var(--space-2);
+  }
+}
+
+/* ── Waiting Screen ─────────────────────────────────────────────────── */
+.waitingScreen {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  padding: var(--space-5);
+  text-align: center;
+  background-color: #1a1a1a;
+}
+
+.waitingIcon {
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-2);
+  animation: skeleton-pulse 2s ease-in-out infinite;
+}
+
+.waitingHeading {
+  font-size: 20px;
+  font-weight: 500;
+  color: white;
+}
+
+.waitingSubtext {
+  font-size: 15px;
+  color: var(--color-text-secondary);
+}
+
+.waitingActions {
+  margin-top: var(--space-6);
+}
+

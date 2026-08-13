@@ -1,0 +1,99 @@
+/* DateNavigationBar.module.css */
+
+.container {
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-4) var(--space-5);
+  border-bottom: 1px solid var(--color-border);
+  gap: var(--space-3);
+  background: var(--color-surface);
+}
+
+.topRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.dateDisplay {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  cursor: pointer;
+}
+
+.dateLabel {
+  font-size: var(--font-size-md);
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.iconSecondary {
+  color: var(--color-text-secondary);
+}
+
+.iconBtn {
+  background: transparent;
+  border: none;
+  padding: var(--space-1);
+  cursor: pointer;
+  color: var(--color-text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+}
+
+.iconBtn:not(:disabled):hover {
+  background: var(--color-surface-hover);
+}
+
+.bottomRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.navControls {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.todayBtn {
+  background: transparent;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-full);
+  padding: 4px var(--space-3);
+  font-size: var(--font-size-xs);
+  font-weight: 500;
+  color: var(--color-text-primary);
+  cursor: pointer;
+  transition: background var(--duration-fast) var(--easing);
+}
+
+.todayBtn:hover {
+  background: var(--color-surface-hover);
+}
+
+.arrowGroup {
+  display: flex;
+  align-items: center;
+}
+
+.arrowBtn {
+  background: transparent;
+  border: none;
+  padding: var(--space-1);
+  cursor: pointer;
+  color: var(--color-text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+  transition: background var(--duration-fast) var(--easing);
+}
+
+.arrowBtn:hover {
+  background: var(--color-surface-hover);
+}

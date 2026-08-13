@@ -1,0 +1,317 @@
+/* Topbar.module.css — all values use CSS variables from styles/globals.css */
+
+.topbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--topbar-height);
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  padding: 0 var(--space-4);
+  gap: var(--space-3);
+  z-index: 200;
+  box-sizing: border-box;
+}
+
+/* ── Left: Logo ─────────────────────────────────────────────── */
+.logoSection {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-shrink: 0;
+  min-width: 110px;
+}
+
+.logoIcon {
+  flex-shrink: 0;
+}
+
+.logoText {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+
+.logoWordmark {
+  font-size: var(--font-size-md);
+  font-weight: 700;
+  color: var(--color-primary);
+  letter-spacing: -0.02em;
+}
+
+.logoSub {
+  font-size: var(--font-size-xs);
+  font-weight: 400;
+  color: var(--color-text-secondary);
+  letter-spacing: 0.01em;
+}
+
+/* ── Center-left: Nav arrows ─────────────────────────────────── */
+.navControls {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  margin-left: var(--space-3);
+  flex-shrink: 0;
+}
+
+.iconBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: none;
+  background: transparent;
+  border-radius: var(--radius-sm);
+  color: var(--color-icon-default);
+  cursor: pointer;
+  transition: background var(--duration-fast) var(--easing);
+}
+
+.iconBtn:hover {
+  background: var(--color-surface-hover);
+}
+
+/* ── Center: Search bar ──────────────────────────────────────── */
+.searchWrapper {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.searchBar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  background: var(--color-bg);
+  border: none;
+  border-radius: var(--radius-full);
+  padding: 0 var(--space-3);
+  height: 30px;
+  width: 480px;
+  cursor: text;
+  transition: box-shadow var(--duration-fast) var(--easing);
+}
+
+.searchBar:focus-within {
+  box-shadow: 0 0 0 1px var(--color-primary);
+}
+
+.searchIcon {
+  color: var(--color-icon-default);
+  flex-shrink: 0;
+}
+
+.searchInput {
+  flex: 0 0 auto;
+  width: 8ch;
+  border: none;
+  background: transparent;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-primary);
+  outline: none;
+  font-family: var(--font-primary);
+}
+
+.searchInput::placeholder {
+  color: var(--color-text-secondary);
+}
+
+.searchShortcut {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  flex-shrink: 0;
+}
+
+/* ── Right: Actions ──────────────────────────────────────────── */
+.rightSection {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex-shrink: 0;
+  margin-left: auto;
+}
+
+.upgradeBtn {
+  display: flex;
+  align-items: center;
+  height: 30px;
+  padding: 0 var(--space-3);
+  background: var(--color-primary);
+  color: var(--color-text-on-primary);
+  border: none;
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  cursor: pointer;
+  transition: background var(--duration-fast) var(--easing);
+  font-family: var(--font-primary);
+}
+
+.upgradeBtn:hover {
+  background: var(--color-primary-hover);
+}
+
+/* ── Avatar ──────────────────────────────────────────────────── */
+.avatarWrapper {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: var(--radius-full);
+  background: var(--color-primary);
+  color: var(--color-text-on-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  cursor: pointer;
+  user-select: none;
+}
+
+.onlineDot {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 10px;
+  height: 10px;
+  border-radius: var(--radius-full);
+  border: 2px solid var(--color-surface);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Status colors used by both dot and dropdown */
+.statusAvailable { background: var(--color-success); }
+.statusBusy, .statusDnd { background: var(--color-danger); }
+.statusAway { background: var(--color-icon-default); }
+.statusOoo { 
+  background: var(--color-surface);
+  border: 1px solid var(--color-icon-default);
+}
+
+/* ── Profile Dropdown ────────────────────────────────────────── */
+.dropdown {
+  position: absolute;
+  top: calc(100% + var(--space-2));
+  right: 0;
+  width: 260px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-modal);
+  z-index: 300;
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-2) 0;
+  animation: slideDown var(--duration-fast) var(--easing);
+  cursor: default;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.dropdownHeader {
+  padding: var(--space-2) var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.dropdownName {
+  font-weight: 700;
+  font-size: var(--font-size-md);
+  color: var(--color-text-primary);
+}
+
+.dropdownEmail {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+}
+
+.dropdownDivider {
+  height: 1px;
+  background-color: var(--color-border);
+  margin: var(--space-2) 0;
+}
+
+.dropdownItem {
+  padding: var(--space-2) var(--space-4);
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-primary);
+  background: transparent;
+  border: none;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  transition: background var(--duration-fast) var(--easing);
+}
+
+.dropdownItem:hover {
+  background: var(--color-surface-hover);
+}
+
+.dropdownItemText {
+  flex: 1;
+}
+
+.dropdownItemRight {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-xs);
+}
+
+.statusIcon {
+  width: 10px;
+  height: 10px;
+  border-radius: var(--radius-full);
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+.statusCheck {
+  margin-left: auto;
+  color: var(--color-primary);
+}
+
+.downloadLink {
+  padding: var(--space-2) var(--space-4);
+  font-size: var(--font-size-sm);
+  color: var(--color-primary);
+  text-decoration: none;
+  cursor: pointer;
+  display: block;
+}
+
+.downloadLink:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 767px) {
+  .navControls {
+    display: none;
+  }
+
+  .searchBar {
+    width: 100%;
+    max-width: 240px;
+  }
+
+  .upgradeBtn {
+    display: none;
+  }
+}
+
