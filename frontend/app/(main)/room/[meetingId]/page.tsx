@@ -3,7 +3,7 @@
 import { useEffect, useState, useCallback } from 'react'
 import { useRouter, useParams, useSearchParams } from 'next/navigation'
 import { Mic, MicOff, Video, VideoOff, Shield, Users, MessageSquare, Smile, X, Hourglass, Info, ShieldCheck, LayoutGrid, ChevronUp, AlertTriangle, ArrowUpSquare, Sparkles, MoreHorizontal } from 'lucide-react'
-import { getMeeting, endMeeting, removeParticipant as removeParticipantApi } from '@/lib/api'
+import { getMeeting, endMeeting } from '@/lib/api'
 import type { Meeting } from '@/types'
 import { useRoomSocket } from '@/hooks/useRoomSocket'
 import InviteModal from '@/components/modals/InviteModal'
@@ -119,13 +119,7 @@ export default function MeetingRoomPage() {
     }
   }
 
-  async function handleRemoveParticipant(participantId: number) {
-    try {
-      await removeParticipantApi(meetingId, participantId)
-    } catch (err) {
-      console.error('Failed to remove participant', err)
-    }
-  }
+
 
   const handleMuteAll = useCallback(() => {
     muteAll()

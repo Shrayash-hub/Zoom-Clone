@@ -1,7 +1,7 @@
 # ARCHITECTURE.md
 
 ## Stack
-- **Frontend**: Next.js 14 (App Router), TypeScript, Tailwind CSS
+- **Frontend**: Next.js 16.3.0 (App Router), TypeScript, Tailwind CSS
 - **Backend**: FastAPI (Python), SQLite via SQLAlchemy
 - **Communication**: REST API, JSON
 - **Deployment**: Frontend → Vercel, Backend → Render
@@ -32,24 +32,17 @@ frontend/
 │   ├── home/
 │   │   ├── ActionButtons.tsx   # New Meeting / Join / Schedule
 │   │   ├── DailyAgenda.tsx
-│   │   └── DateNavigationBar.tsx
-│   ├── meetings/
-│   │   ├── MeetingCard.tsx
-│   │   └── MeetingDetail.tsx
+│   │   ├── DateNavigationBar.tsx
+│   │   ├── RecentMeetings.tsx
+│   │   └── UpcomingMeetings.tsx
 │   ├── modals/
-│   │   ├── NewMeetingModal.tsx
-│   │   └── JoinMeetingModal.tsx
-│   ├── ui/
-│   │   ├── Button.tsx
-│   │   ├── Input.tsx
-│   │   ├── Modal.tsx
-│   │   └── Avatar.tsx
+│   │   ├── InviteModal.tsx
+│   │   └── NewMeetingModal.tsx
 │   └── common/
 │       └── ComingSoonToast.tsx # Shared disabled state toast
 ├── hooks/
 │   ├── useHomeData.ts          # Fetches upcoming/recent meetings
-│   ├── useRoomSocket.ts        # Manages WebSocket connection
-│   └── useSchedule.ts
+│   └── useRoomSocket.ts        # Manages WebSocket connection
 ├── lib/
 │   └── api.ts                  # All fetch calls to backend REST API
 ├── types/
@@ -68,7 +61,8 @@ backend/
 ├── seed.py                     # Database seeding script
 └── routers/
     ├── meetings.py             # Meeting CRUD endpoints
-    └── participants.py         # Participant endpoints
+    ├── participants.py         # Participant endpoints
+    └── users.py                # User details endpoints
 ```
 
 ## API Contract
@@ -82,9 +76,12 @@ backend/
 GET    /api/meetings              # All meetings (upcoming + recent)
 POST   /api/meetings              # Create instant or scheduled meeting
 GET    /api/meetings/:id          # Single meeting detail
-DELETE /api/meetings/:id          # Delete meeting
+DELETE /api/meetings/:id          # End a meeting (soft — sets status to ended, does not delete the row)
+POST   /api/meetings/pmi/start    # Start or resume the host's PMI meeting
 POST   /api/meetings/:id/join     # Join meeting (register participant)
 GET    /api/meetings/:id/participants  # List participants
+POST   /api/meetings/:id/participants/:participant_id/remove  # Remove a participant
+GET    /api/users/me              # Return the default user details
 ```
 
 ## Key Design Decisions
@@ -113,6 +110,7 @@ GET    /api/meetings/:id/participants  # List participants
 ```
 # Frontend (.env.local)
 NEXT_PUBLIC_API_URL=http://localhost:8000/api
+NEXT_PUBLIC_WS_URL=ws://localhost:8000
 
 # Backend (.env)
 DATABASE_URL=sqlite:///./zoom_clone.db

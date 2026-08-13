@@ -3,7 +3,7 @@
 A functional clone of the Zoom Workplace web app built for the Scaler SDE Fullstack Assignment.
 
 ## Tech Stack
-- **Frontend**: Next.js 14 (App Router), TypeScript, Tailwind CSS
+- **Frontend**: Next.js 16.3.0 (App Router), TypeScript, Tailwind CSS
 - **Backend**: FastAPI (Python), SQLAlchemy
 - **Database**: SQLite
 - **Deployment**: Vercel (frontend), Render (backend)
