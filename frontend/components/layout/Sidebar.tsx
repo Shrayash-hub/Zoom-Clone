@@ -1,7 +1,9 @@
 'use client'
 
+import { useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import ComingSoonToast from '@/components/common/ComingSoonToast'
 import styles from './Sidebar.module.css'
 
 // ── SVG Icons ─────────────────────────────────────────────────────────────────
@@ -93,7 +95,7 @@ type NavItemConfig = {
 const NAV_ITEMS: NavItemConfig[] = [
   { label: 'Home',     icon: HomeIcon,     href: '/',         id: 'nav-home' },
   { label: 'Meetings', icon: MeetingsIcon, href: '/meetings', id: 'nav-meetings' },
-  { label: 'Chat',     icon: ChatIcon,     href: '/chat',     id: 'nav-chat' },
+  { label: 'Chat',     icon: ChatIcon,     href: null,        id: 'nav-chat' },
   { label: 'More',     icon: MoreIcon,     href: null,        id: 'nav-more' },
 ]
 
@@ -101,6 +103,12 @@ const NAV_ITEMS: NavItemConfig[] = [
 
 export default function Sidebar() {
   const pathname = usePathname()
+  const [comingSoonVisible, setComingSoonVisible] = useState(false)
+
+  function showComingSoon() {
+    setComingSoonVisible(true)
+    setTimeout(() => setComingSoonVisible(false), 2000)
+  }
 
   function isActive(href: string | null): boolean {
     if (!href) return false
@@ -135,6 +143,7 @@ export default function Sidebar() {
                   className={itemClass}
                   aria-label={label}
                   type="button"
+                  onClick={id === 'nav-chat' ? showComingSoon : undefined}
                 >
                   <span className={styles.iconWrapper}>
                     <Icon />
@@ -160,6 +169,8 @@ export default function Sidebar() {
           <span className={styles.label}>Settings</span>
         </button>
       </div>
+      
+      <ComingSoonToast visible={comingSoonVisible} />
     </nav>
   )
 }
