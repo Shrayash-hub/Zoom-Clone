@@ -27,10 +27,10 @@ export default function MeetingRoomPage() {
   const [isVideoStopped, setIsVideoStopped] = useState(false)
 
   // Mute All button feedback state
-  const [muteAllLabel, setMuteAllLabel] = useState<'Mute All' | 'Muted'>('Mute All')
+  const [allMuted, setAllMuted] = useState(false)
 
   // Participants state
-  const { participants, connected, isMuted, muteAll, wasRemoved, removeParticipant } = useRoomSocket(meetingId, displayName, isHost)
+  const { participants, connected, isMuted, muteAll, unmuteAll, muteParticipant, unmuteParticipant, wasRemoved, removeParticipant } = useRoomSocket(meetingId, displayName, isHost)
   const [isParticipantsOpen, setIsParticipantsOpen] = useState(false)
 
   // Timer state
@@ -57,7 +57,7 @@ export default function MeetingRoomPage() {
 
   // Sync isMuted from socket — when host broadcasts mute_all, force local mute
   useEffect(() => {
-    if (isMuted) setIsMutedLocal(true)
+    setIsMutedLocal(isMuted)
   }, [isMuted])
 
   useEffect(() => {
@@ -121,12 +121,17 @@ export default function MeetingRoomPage() {
 
 
 
-  const handleMuteAll = useCallback(() => {
-    muteAll()
-    setIsMutedLocal(true) // Host mutes themselves too
-    setMuteAllLabel('Muted')
-    setTimeout(() => setMuteAllLabel('Mute All'), 2000)
-  }, [muteAll])
+  const handleToggleMuteAll = useCallback(() => {
+    if (allMuted) {
+      unmuteAll()
+      setIsMutedLocal(false)
+      setAllMuted(false)
+    } else {
+      muteAll()
+      setIsMutedLocal(true)
+      setAllMuted(true)
+    }
+  }, [allMuted, muteAll, unmuteAll])
 
   function formatTimer(totalSeconds: number) {
     const h = Math.floor(totalSeconds / 3600)
@@ -233,10 +238,10 @@ export default function MeetingRoomPage() {
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                 {isHost && (
                   <button
-                    className={`${styles.muteAllBtn} ${muteAllLabel === 'Muted' ? styles.muted : ''}`}
-                    onClick={handleMuteAll}
+                    className={`${styles.muteAllBtn} ${allMuted ? styles.muted : ''}`}
+                    onClick={handleToggleMuteAll}
                   >
-                    {muteAllLabel}
+                    {allMuted ? 'Unmute All' : 'Mute All'}
                   </button>
                 )}
                 <button className={styles.closeBtn} onClick={() => setIsParticipantsOpen(false)}>
@@ -250,31 +255,49 @@ export default function MeetingRoomPage() {
                 <div className={styles.emptyPanelText}>No participants yet</div>
               ) : (
                 participants.map((p, idx) => (
-                  <div key={idx} className={styles.participantRow} style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: '8px 0' }}>
-                    <div className={styles.pAvatar} style={{ width: '32px', height: '32px', borderRadius: '50%', backgroundColor: 'var(--color-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '12px', color: 'white', fontWeight: 600 }}>
+                  <div key={idx} className={styles.participantRow}>
+                    <div className={styles.pAvatar}>
                       {p.display_name.split(' ').map(w => w[0]).slice(0, 2).join('').toUpperCase()}
                     </div>
-                    <div className={styles.pName} title={p.display_name} style={{ color: 'white', fontSize: '14px', flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                    <div className={styles.pName} title={p.display_name} style={{ minWidth: 0 }}>
                       {p.display_name}
                     </div>
-                    {p.is_host && <div className={styles.hostBadge} style={{ fontSize: '11px', backgroundColor: '#333', color: '#ccc', padding: '2px 6px', borderRadius: '12px' }}>Host</div>}
+                    {p.is_host && <div className={styles.hostBadge} style={{ marginRight: '4px' }}>Host</div>}
                     {isHost && !p.is_host && p.display_name !== displayName && (
-                      <button
-                        onClick={() => removeParticipant(p.display_name)}
-                        style={{
-                          background: 'transparent',
-                          border: 'none',
-                          color: '#ff4d4f',
-                          cursor: 'pointer',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          padding: '4px'
-                        }}
-                        title="Remove Participant"
-                      >
-                        <X size={14} />
-                      </button>
+                      <div style={{ display: 'flex', gap: '4px' }}>
+                        <button
+                          onClick={() => p.muted ? unmuteParticipant(p.display_name) : muteParticipant(p.display_name)}
+                          style={{
+                            background: 'transparent',
+                            border: 'none',
+                            color: p.muted ? '#ff4d4f' : 'var(--color-text-secondary)',
+                            cursor: 'pointer',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            padding: '4px'
+                          }}
+                          title={p.muted ? "Unmute Participant" : "Mute Participant"}
+                        >
+                          {p.muted ? <MicOff size={14} /> : <Mic size={14} />}
+                        </button>
+                        <button
+                          onClick={() => removeParticipant(p.display_name)}
+                          style={{
+                            background: 'transparent',
+                            border: 'none',
+                            color: '#ff4d4f',
+                            cursor: 'pointer',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            padding: '4px'
+                          }}
+                          title="Remove Participant"
+                        >
+                          <X size={14} />
+                        </button>
+                      </div>
                     )}
                   </div>
                 ))

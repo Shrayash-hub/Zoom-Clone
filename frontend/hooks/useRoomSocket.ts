@@ -3,6 +3,7 @@ import { useState, useEffect, useRef, useCallback } from 'react'
 export interface SocketParticipant {
   display_name: string
   is_host: boolean
+  muted: boolean
   joined_at: string
 }
 
@@ -11,6 +12,9 @@ interface UseRoomSocketReturn {
   connected: boolean
   isMuted: boolean        // true when host broadcasts mute_all to this client
   muteAll: () => void     // sends mute_all command to server (host only)
+  unmuteAll: () => void   // sends unmute_all command to server (host only)
+  muteParticipant: (displayName: string) => void
+  unmuteParticipant: (displayName: string) => void
   wasRemoved: boolean     // true when this participant is removed by host
   removeParticipant: (displayName: string) => void
 }
@@ -43,6 +47,12 @@ export function useRoomSocket(
         setParticipants(data.participants)
       } else if (data.type === 'mute_all') {
         setIsMuted(true)
+      } else if (data.type === 'unmute_all') {
+        setIsMuted(false)
+      } else if (data.type === 'muted_by_host') {
+        setIsMuted(true)
+      } else if (data.type === 'unmuted_by_host') {
+        setIsMuted(false)
       } else if (data.type === 'removed') {
         setWasRemoved(true)
       }
@@ -72,11 +82,29 @@ export function useRoomSocket(
     }
   }, [])
 
+  const unmuteAll = useCallback(() => {
+    if (wsRef.current?.readyState === WebSocket.OPEN) {
+      wsRef.current.send(JSON.stringify({ type: 'unmute_all' }))
+    }
+  }, [])
+
+  const muteParticipant = useCallback((displayName: string) => {
+    if (wsRef.current?.readyState === WebSocket.OPEN) {
+      wsRef.current.send(JSON.stringify({ type: 'mute_participant', display_name: displayName }))
+    }
+  }, [])
+
+  const unmuteParticipant = useCallback((displayName: string) => {
+    if (wsRef.current?.readyState === WebSocket.OPEN) {
+      wsRef.current.send(JSON.stringify({ type: 'unmute_participant', display_name: displayName }))
+    }
+  }, [])
+
   const removeParticipant = useCallback((displayName: string) => {
     if (wsRef.current?.readyState === WebSocket.OPEN) {
       wsRef.current.send(JSON.stringify({ type: 'remove_participant', display_name: displayName }))
     }
   }, [])
 
-  return { participants, connected, isMuted, muteAll, wasRemoved, removeParticipant }
+  return { participants, connected, isMuted, muteAll, unmuteAll, muteParticipant, unmuteParticipant, wasRemoved, removeParticipant }
 }

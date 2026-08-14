@@ -90,10 +90,58 @@ class ConnectionManager:
         message = json.dumps({ "type": "mute_all" })
         for ws, p in self.rooms[meeting_id]:
             if ws != sender_ws:
+                p["muted"] = True
                 try:
                     await ws.send_text(message)
                 except Exception:
                     pass
+        await self.broadcast(meeting_id)
+
+    async def unmute_all(self, meeting_id: str, sender_ws: WebSocket):
+        """Broadcast unmute_all to every participant EXCEPT the sender (host)."""
+        if meeting_id not in self.rooms:
+            return
+        message = json.dumps({ "type": "unmute_all" })
+        for ws, p in self.rooms[meeting_id]:
+            if ws != sender_ws:
+                p["muted"] = False
+                try:
+                    await ws.send_text(message)
+                except Exception:
+                    pass
+        await self.broadcast(meeting_id)
+
+    async def mute_participant(self, meeting_id: str, display_name: str, requester_ws: WebSocket):
+        if meeting_id not in self.rooms:
+            return
+        target_ws = None
+        for ws, p in self.rooms[meeting_id]:
+            if p.get("display_name") == display_name and not p.get("is_host"):
+                p["muted"] = True
+                target_ws = ws
+                break
+        if target_ws:
+            try:
+                await target_ws.send_text(json.dumps({"type": "muted_by_host"}))
+            except Exception:
+                pass
+            await self.broadcast(meeting_id)
+
+    async def unmute_participant(self, meeting_id: str, display_name: str, requester_ws: WebSocket):
+        if meeting_id not in self.rooms:
+            return
+        target_ws = None
+        for ws, p in self.rooms[meeting_id]:
+            if p.get("display_name") == display_name and not p.get("is_host"):
+                p["muted"] = False
+                target_ws = ws
+                break
+        if target_ws:
+            try:
+                await target_ws.send_text(json.dumps({"type": "unmuted_by_host"}))
+            except Exception:
+                pass
+            await self.broadcast(meeting_id)
 
     async def remove_participant(self, meeting_id: str, display_name: str, requester_ws: WebSocket):
         """Host removes a participant."""
@@ -137,7 +185,8 @@ async def websocket_room(
     participant = {
         "display_name": display_name,
         "is_host": is_host,
-        "joined_at": datetime.utcnow().isoformat()
+        "joined_at": datetime.utcnow().isoformat(),
+        "muted": False
     }
     await manager.connect(websocket, meeting_id, participant)
     try:
@@ -150,6 +199,12 @@ async def websocket_room(
                 msg = json.loads(data)
                 if msg.get("type") == "mute_all":
                     await manager.mute_all(meeting_id, websocket)
+                elif msg.get("type") == "unmute_all":
+                    await manager.unmute_all(meeting_id, websocket)
+                elif msg.get("type") == "mute_participant":
+                    await manager.mute_participant(meeting_id, msg.get("display_name"), websocket)
+                elif msg.get("type") == "unmute_participant":
+                    await manager.unmute_participant(meeting_id, msg.get("display_name"), websocket)
                 elif msg.get("type") == "remove_participant":
                     await manager.remove_participant(meeting_id, msg.get("display_name"), websocket)
             except Exception:
