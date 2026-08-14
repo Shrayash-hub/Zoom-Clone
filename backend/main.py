@@ -7,12 +7,14 @@ from datetime import datetime
 from fastapi.middleware.cors import CORSMiddleware
 from database import Base, engine
 from routers import meetings, participants, users
+from seed import seed
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    """Create all DB tables on startup."""
+    """Create all DB tables on startup, then seed if empty (idempotent — safe on every restart)."""
     Base.metadata.create_all(bind=engine)
+    seed()
     yield
 
 
