@@ -399,6 +399,43 @@
 
   .controlBtn {
     padding: var(--space-1) var(--space-2);
+    flex-shrink: 0;
+  }
+
+  .controlsBar {
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none; /* Firefox */
+    justify-content: flex-start; /* Better behavior with scrolling */
+    gap: var(--space-4);
+  }
+
+  .controlsBar::-webkit-scrollbar {
+    display: none; /* Chrome/Safari */
+  }
+
+  .centerGroup {
+    position: static;
+    transform: none;
+    flex-shrink: 0;
+  }
+
+  .controlsGroup {
+    flex-shrink: 0;
+  }
+
+  .controlsBar > .controlsGroup:last-child {
+    position: sticky;
+    right: 0;
+    background-color: #111111;
+    padding-left: var(--space-2);
+    margin-left: auto; /* Pushes to right if there is extra space */
+    z-index: 2;
+  }
+
+  .endBtn {
+    flex-shrink: 0;
   }
 }
 
